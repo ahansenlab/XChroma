@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.venv*/
+.pytest_cache/
+.DS_Store
+data/
+weights/
+outputs/
+runs/
+*.pt
+*.npz
+*.npy
+*.memmap
+*.az
+results/
+.env

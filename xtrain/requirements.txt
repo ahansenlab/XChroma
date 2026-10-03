@@ -1,0 +1,9 @@
+-r requirements-inference.txt
+scipy
+matplotlib
+cooler
+cooltools
+pyfaidx
+pytabix
+setuptools
+selene-sdk

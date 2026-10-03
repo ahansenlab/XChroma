@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "release_id": "xchrom_avg10_present_30500_35000",
+  "scope": "Current main contact model; excludes study-specific distillation and architecture/depth ablations.",
+  "members": [
+    {
+      "step": 30500,
+      "filename": "orca_200kb_1000bp.step30500.ckpt.pt",
+      "bytes": 45257094,
+      "sha256": "e57a69a96df5781e26f7299274f6e5a5af3e291b7cbceec6f3595358fc89f543",
+      "weight": 0.1,
+      "download_url": "https://github.com/YanXu2077/X-Chrom/releases/download/main-model-avg10-30500-35000/orca_200kb_1000bp.step30500.ckpt.pt"
+    },
+    {
+      "step": 31000,
+      "filename": "orca_200kb_1000bp.step31000.ckpt.pt",
+      "bytes": 45257094,
+      "sha256": "5f7fd208adde786a673d577b6a64f56e580f8193d9952e1793ea141a024c3dd1",
+      "weight": 0.1,
+      "download_url": "https://github.com/YanXu2077/X-Chrom/releases/download/main-model-avg10-30500-35000/orca_200kb_1000bp.step31000.ckpt.pt"
+    },
+    {
+      "step": 31500,
+      "filename": "orca_200kb_1000bp.step31500.ckpt.pt",
+      "bytes": 45257094,
+      "sha256": "ece2e0389681d8384e334ddddaf480ce847185ebdf1dafaa850259a604cf1f22",
+      "weight": 0.1,
+      "download_url": "https://github.com/YanXu2077/X-Chrom/releases/download/main-model-avg10-30500-35000/orca_200kb_1000bp.step31500.ckpt.pt"
+    },
+    {
+      "step": 32000,
+      "filename": "orca_200kb_1000bp.step32000.ckpt.pt",
+      "bytes": 45257094,
+      "sha256": "6699664e247f4c6264f709741a6bc03f9de8b1efce3122a6b9f31280a2f46d84",
+      "weight": 0.1,
+      "download_url": "https://github.com/YanXu2077/X-Chrom/releases/download/main-model-avg10-30500-35000/orca_200kb_1000bp.step32000.ckpt.pt"
+    },
+    {
+      "step": 32500,
+      "filename": "orca_200kb_1000bp.step32500.ckpt.pt",
+      "bytes": 45257094,
+      "sha256": "cbead9ad047538096cd638b19e92d6e36d61d18aeba8bc04e14e7bffa8e6ee41",
+      "weight": 0.1,
+      "download_url": "https://github.com/YanXu2077/X-Chrom/releases/download/main-model-avg10-30500-35000/orca_200kb_1000bp.step32500.ckpt.pt"
+    },
+    {
+      "step": 33000,
+      "filename": "orca_200kb_1000bp.step33000.ckpt.pt",
+      "bytes": 45257094,
+      "sha256": "0c1229fdec97f71b435337af6fd10390bddd16ac52732c3063288caef8f42062",
+      "weight": 0.1,
+      "download_url": "https://github.com/YanXu2077/X-Chrom/releases/download/main-model-avg10-30500-35000/orca_200kb_1000bp.step33000.ckpt.pt"
+    },
+    {
+      "step": 33500,
+      "filename": "orca_200kb_1000bp.step33500.ckpt.pt",
+      "bytes": 45257094,
+      "sha256": "bf4c42c2d0f35ef509f6a7e88db94a90a61866433bbb08be1ecbae2616cbcf20",
+      "weight": 0.1,
+      "download_url": "https://github.com/YanXu2077/X-Chrom/releases/download/main-model-avg10-30500-35000/orca_200kb_1000bp.step33500.ckpt.pt"
+    },
+    {
+      "step": 34000,
+      "filename": "orca_200kb_1000bp.step34000.ckpt.pt",
+      "bytes": 45257094,
+      "sha256": "36054d01e33d3f5cdc5445bcf7ec38ec026e0705d846b3e931eadd180bde6128",
+      "weight": 0.1,
+      "download_url": "https://github.com/YanXu2077/X-Chrom/releases/download/main-model-avg10-30500-35000/orca_200kb_1000bp.step34000.ckpt.pt"
+    },
+    {
+      "step": 34500,
+      "filename": "orca_200kb_1000bp.step34500.ckpt.pt",
+      "bytes": 45257094,
+      "sha256": "b73a5f80af8c1361b6c574d0f67a021ef11ddf8d37d0637184b88969232384fc",
+      "weight": 0.1,
+      "download_url": "https://github.com/YanXu2077/X-Chrom/releases/download/main-model-avg10-30500-35000/orca_200kb_1000bp.step34500.ckpt.pt"
+    },
+    {
+      "step": 35000,
+      "filename": "orca_200kb_1000bp.step35000.ckpt.pt",
+      "bytes": 45257094,
+      "sha256": "9367d1dadca1804f06f0fde05dd4ad855614d5222f18ebf4f86247796ba0a555",
+      "weight": 0.1,
+      "download_url": "https://github.com/YanXu2077/X-Chrom/releases/download/main-model-avg10-30500-35000/orca_200kb_1000bp.step35000.ckpt.pt"
+    }
+  ],
+  "ensemble": {
+    "operator": "Arithmetic mean of ten model output maps in native natural-log observed/expected space",
+    "weights": "0.1 per member",
+    "not_parameter_averaging": true,
+    "reference_runtime": "float32 forward, float64 ensemble accumulation; strict state-dict loading, no autocast, TF32 disabled"
+  },
+  "availability": {
+    "repository_weight_blobs": false,
+    "distribution": "GitHub Release assets",
+    "release_tag": "main-model-avg10-30500-35000",
+    "release_url": "https://github.com/YanXu2077/X-Chrom/releases/tag/main-model-avg10-30500-35000",
+    "access": "Authenticated repository access is required while X-Chrom is private."
+  },
+  "architecture": {
+    "source": "xtrain/model.py",
+    "sha256": "f38f9dad3709e6534ff5ca27813e6af4558f834519074d623b95c60e5f11b85b",
+    "input_channels": [
+      "A",
+      "C",
+      "G",
+      "T",
+      "normalized ATAC"
+    ],
+    "input_bp": 1000000,
+    "output_bin_bp": 1000,
+    "output_space": "native natural-log observed/expected",
+    "normalization": "native log1p ATAC / source-global p99; scale 1"
+  }
+}
