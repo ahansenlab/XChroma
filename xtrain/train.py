@@ -1,6 +1,6 @@
 """Training entry point for the XChroma contact architecture.
 Configuration is supplied through environment variables; see README.md.
-The released inference ensemble is defined separately in checkpoints/current_model.json."""
+The study inference ensemble is defined separately in checkpoints/current_model.json."""
 import os
 import cooler
 import numpy as np

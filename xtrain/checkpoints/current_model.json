@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "release_id": "xchroma_avg10_present_30500_35000",
-  "scope": "XChroma contact-model checkpoints for DNA+ATAC and xatac-based DNA-only inference. Cell-specific xatac checkpoints are supplied separately.",
+  "scope": "XChroma contact-model checkpoints for DNA+ATAC and xatac-based DNA-only inference. Cell-specific xatac inference requires separate local checkpoint files.",
   "members": [
     {
       "step": 30500,
