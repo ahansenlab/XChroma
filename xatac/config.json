@@ -1,0 +1,29 @@
+{
+  "model": {
+    "seq_len": 1048576,
+    "width": 512,
+    "n_dilated": 13,
+    "dilation_cycles": 1,
+    "pool_factors": [5, 5, 5, 1, 1, 1],
+    "up_factors": [5, 5, 5],
+    "up_channels": [128, 64, 32],
+    "grad_checkpoint": true
+  },
+  "batch_size": 8,
+  "max_steps": 50000,
+  "lr": 0.0002,
+  "min_lr": 0.00002,
+  "warmup": 250,
+  "weight_decay": 0.01,
+  "grad_clip": 1.0,
+  "shift_bp": 1000,
+  "reverse_complement_probability": 0.5,
+  "seed": 42,
+  "val_seed": 42,
+  "val_windows": 20,
+  "validate_every": 500,
+  "save_every": 100,
+  "loader_workers": 4,
+  "threads": 4,
+  "precision": "bf16"
+}
