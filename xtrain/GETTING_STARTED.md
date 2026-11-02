@@ -42,7 +42,7 @@ This uses the inference dependencies and writes `.global_p99`. Existing source-p
 
 ```bash
 gh release download main-model-avg10-30500-35000 \
-  --repo YanXu2077/XChroma --pattern '*.ckpt.pt' --dir weights
+  --repo ahansenlab/XChroma --pattern '*.ckpt.pt' --dir weights
 python xtrain/checkpoints/verify.py --weights-dir weights
 python xtrain/predict.py \
   --genome-fa /path/to/hg38.fa --atac-dir /path/to/cell_atac \

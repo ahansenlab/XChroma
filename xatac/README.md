@@ -25,7 +25,7 @@ python -m pytest xatac/tests -q
 
 ## Pretrained ensembles
 
-[Download the pretrained xATAC weights](https://github.com/YanXu2077/XChroma/releases/tag/xatac-avg10-20261102).
+[Download the pretrained xATAC weights](https://github.com/ahansenlab/XChroma/releases/tag/xatac-avg10-20261102).
 The release contains 120 checkpoint files: ten each for GM12878, HCT116, HepG2,
 K562, HAP1, mESC, MDP, CDP, precDC1, cDC1, THP-1 and d2PGCLC. The complete set is
 17.53 GB; one cell's ten-member ensemble is about 1.46 GB. Authenticated access
@@ -35,7 +35,7 @@ For example, download and verify the GM12878 ensemble. Use a new directory
 for each cell so the checkpoint pattern selects exactly its ten members:
 
 ```bash
-gh release download xatac-avg10-20261102 --repo YanXu2077/XChroma \
+gh release download xatac-avg10-20261102 --repo ahansenlab/XChroma \
   --pattern 'XChroma_xATAC_gm12878_step*.pt' \
   --pattern xatac_models.json --pattern SHA256SUMS --dir weights/xatac/gm12878
 (
