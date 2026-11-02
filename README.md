@@ -46,17 +46,23 @@ Use a cell-specific **xatac** model to predict accessibility, then pass its outp
 and the same DNA sequence to **XChroma**. The contact model and weights are the same
 as above.
 
-First, predict accessibility for the requested interval. Set `XCHROMA_SCALE` and
-`ATAC_GP99` to the fixed conversion parameters associated with your cell-specific
-model, as described in the [xatac guide](xatac/README.md#4-predict-atac).
+Download the ten-member GM12878 ensemble from the
+[pretrained xATAC release](https://github.com/YanXu2077/XChroma/releases/tag/xatac-avg10-20261102)
+into a new, cell-specific directory, then predict accessibility with its fixed
+training calibration. Use the matching indexed hg38 reference FASTA. See the
+[xatac guide](xatac/README.md#pretrained-ensembles) for checksum verification,
+other cell types and the scope of each calibration.
 
 ```bash
 python -m pip install -r xatac/requirements.txt
+gh release download xatac-avg10-20261102 --repo YanXu2077/XChroma \
+  --pattern 'XChroma_xATAC_gm12878_step*.pt' \
+  --pattern xatac_models.json --pattern SHA256SUMS --dir weights/xatac/gm12878
 python -m xatac.predict \
-  --checkpoint /path/to/cell_model.pt \
+  --checkpoint weights/xatac/gm12878/XChroma_xATAC_gm12878_step*.pt \
   --fasta /path/to/hg38.fa --assembly hg38 --chrom chr8 \
   --start 127000000 --end 128000000 \
-  --xchroma-scale "$XCHROMA_SCALE" --gp99 "$ATAC_GP99" \
+  --xchroma-scale 1062.9903291441547 --gp99 6.207031 \
   --device cuda --output outputs/MYC.atac.npz
 ```
 
@@ -75,3 +81,7 @@ python -m xtrain.predict \
 
 The DNA-only map is saved as `outputs/MYC.dna-only/prediction.npz`. The predicted
 accessibility is already normalized for XChroma; this command uses it directly.
+
+For CPU inference, replace `--device cuda` with `--device cpu --threads 8`
+in both commands. Verified 1-Mb DNA-only examples took 6.0–6.4 min
+with eight CPU threads on Linux, after reference-context preparation.

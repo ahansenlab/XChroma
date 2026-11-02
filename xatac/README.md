@@ -13,12 +13,77 @@ build matching your CUDA installation. Run from the repository root:
 python -m pip install -r xatac/requirements.txt
 ```
 
+A fresh installation of the xtrain and xatac inference dependencies took about 82 s on
+macOS 26.1 arm64 with Python 3.12.2, excluding model and reference downloads.
+
 To run the tests:
 
 ```bash
 python -m pip install pytest
 python -m pytest xatac/tests -q
 ```
+
+## Pretrained ensembles
+
+[Download the pretrained xATAC weights](https://github.com/YanXu2077/XChroma/releases/tag/xatac-avg10-20261102).
+The release contains 120 checkpoint files: ten each for GM12878, HCT116, HepG2,
+K562, HAP1, mESC, MDP, CDP, precDC1, cDC1, THP-1 and d2PGCLC. The complete set is
+17.53 GB; one cell's ten-member ensemble is about 1.46 GB. Authenticated access
+is required while the repository is private.
+
+For example, download and verify the GM12878 ensemble. Use a new directory
+for each cell so the checkpoint pattern selects exactly its ten members:
+
+```bash
+gh release download xatac-avg10-20261102 --repo YanXu2077/XChroma \
+  --pattern 'XChroma_xATAC_gm12878_step*.pt' \
+  --pattern xatac_models.json --pattern SHA256SUMS --dir weights/xatac/gm12878
+(
+  cd weights/xatac/gm12878
+  awk '$2 == "xatac_models.json" || $2 ~ /^XChroma_xATAC_gm12878_step/ {print}' SHA256SUMS | shasum -a 256 -c -
+)
+```
+
+`xatac_models.json` lists every filename, checksum, byte size, ensemble and
+calibration. Each checkpoint contains the model configuration, including its
+track mean. Pass all ten members of one ensemble in the listed order. Shell
+expansion of the step-number filenames gives that order.
+
+The following example uses the fixed GM12878 training calibration and a
+matching indexed hg38 reference FASTA:
+
+```bash
+python -m xatac.predict \
+  --checkpoint weights/xatac/gm12878/XChroma_xATAC_gm12878_step*.pt \
+  --fasta genome.fa --assembly GRCh38 --chrom chr8 \
+  --start 127000000 --end 128000000 \
+  --xchroma-scale 1062.9903291441547 --gp99 6.207031 \
+  --device cuda --output MYC.atac.npz
+
+python -m xtrain.predict --genome-fa genome.fa --assembly GRCh38 \
+  --region chr8:127000000-128000000 --atac-npz MYC.atac.npz \
+  --weights-dir weights --device cuda --out results/MYC_DNA_only
+```
+
+Download the separate [contact-model weights](../xtrain/checkpoints/README.md)
+into `weights` before running the second command. For CPU inference, replace
+`--device cuda` with `--device cpu --threads 8` in both commands. Verified 1-Mb
+examples took 6.0–6.4 min on Linux with eight CPU threads and PyTorch 2.5.1,
+using ten checkpoints for each model after reference-context preparation.
+Keep the ATAC NPZ and its JSON sidecar together.
+
+| Human ensemble | Fixed TRAIN scale | gp99 |
+|---|---:|---:|
+| GM12878 | 1062.9903291441547 | 6.207031 |
+| HCT116 | 1020.3265055229913 | 6.191406 |
+| HepG2 | 1030.0842872846365 | 6.132812 |
+| K562 | 1215.6612872453968 | 6.054688 |
+
+The release manifest also records the study-specific WT calibrations for HAP1,
+Sox2, synEP/middle CTCF, Irf8, THP-1 and d2PGCLC. These scalars apply to the stated
+locus and use. Sox2 and synEP share mESC weights but use different scalars. Keep
+each WT scalar fixed across its edits. For accessibility output in insertion-site signal units,
+omit both conversion arguments.
 
 ## 1. Generate insertion-site ATAC
 
@@ -150,8 +215,9 @@ PyTorch checkpoints.
 
 For an ensemble, pass checkpoints for the same cell type trained with the same
 target units after `--checkpoint`. Predictions are averaged in inverse-scaled
-site-signal units. For XChroma input export, add `--xchroma-scale S --gp99 P` using
-two fixed calibration inputs:
+site-signal units. For XChroma input export, add `--xchroma-scale S --gp99 P`. For the pretrained
+ensembles, use the release manifest's exact constants and scope. For a newly
+trained model, establish two fixed calibration inputs:
 
 - `S`: over predefined, equal-length TRAIN intervals, divide the sum of mean
   experimental **linear fragment coverage** by the sum of mean predicted
@@ -197,7 +263,8 @@ mean-reduced total-count Poisson plus 5×positional loss. See
 
 `load_weights` accepts compatible CNN inference checkpoints and strictly checks
 all active weights. Optimizer resume supports checkpoints created by this
-`xatac-v1` trainer. Pretrained weight files are not bundled in this code package.
+`xatac-v1` trainer. Pretrained weight files are distributed as the separate
+release assets described above.
 
 Files: `sites.py` prepares labels; `windows.py` packs data; `data.py` loads and
 augments; `model.py` defines the CNN; `loss.py` defines the objective; `train.py`
