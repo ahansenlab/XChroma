@@ -40,9 +40,10 @@ This uses the inference dependencies and writes `.global_p99`. Existing source-p
 
 ## Weights and inference
 
+Place the ten local checkpoint files listed in `checkpoints/current_model.json`
+in `weights/`. Checkpoint files are not distributed in this repository.
+
 ```bash
-gh release download main-model-avg10-30500-35000 \
-  --repo ahansenlab/XChroma --pattern '*.ckpt.pt' --dir weights
 python xtrain/checkpoints/verify.py --weights-dir weights
 python xtrain/predict.py \
   --genome-fa /path/to/hg38.fa --atac-dir /path/to/cell_atac \

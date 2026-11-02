@@ -4,10 +4,11 @@ XChroma predicts a 1-Mb contact map at 1-kb resolution from DNA sequence and chr
 
 ## Predict a region
 
+Place the ten local checkpoints listed in `checkpoints/current_model.json` in
+`weights/`. Checkpoint files are not distributed in this repository.
+
 ```bash
 python -m pip install -r xtrain/requirements-inference.txt
-gh release download main-model-avg10-30500-35000 \
-  --repo ahansenlab/XChroma --pattern '*.ckpt.pt' --dir weights
 python xtrain/checkpoints/verify.py --weights-dir weights
 python xtrain/predict.py \
   --genome-fa /path/to/hg38.fa \
@@ -16,7 +17,7 @@ python xtrain/predict.py \
   --weights-dir weights --device cuda --out results/example
 ```
 
-Use `--device cpu` to run without a GPU. The repository and its weight assets currently require authenticated access. Input genomes and accessibility datasets are supplied separately. See [Getting started](GETTING_STARTED.md) for the input contract and normalization.
+Use `--device cpu` to run without a GPU. Input genomes and accessibility datasets are supplied separately. See [Getting started](GETTING_STARTED.md) for the input contract and normalization.
 
 Each output directory contains `prediction.npz` and a `manifest.json` with input checksums, normalization, model members and runtime settings. Predictions are native natural-log observed/expected values. The inference entry does not apply a second O/E normalization, clipping or display scaling. `--check-only` validates inputs and all ten weight files without a model forward pass.
 

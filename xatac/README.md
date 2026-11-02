@@ -25,19 +25,15 @@ python -m pytest xatac/tests -q
 
 ## Pretrained ensembles
 
-[Download the pretrained xATAC weights](https://github.com/ahansenlab/XChroma/releases/tag/xatac-avg10-20261102).
-The release contains 120 checkpoint files: ten each for GM12878, HCT116, HepG2,
-K562, HAP1, mESC, MDP, CDP, precDC1, cDC1, THP-1 and d2PGCLC. The complete set is
-17.53 GB; one cell's ten-member ensemble is about 1.46 GB. Authenticated access
-is required while the repository is private.
+Use a local cell-specific xATAC ensemble. Checkpoint files are not distributed
+in this repository. The study uses ten checkpoints per cell type: GM12878,
+HCT116, HepG2, K562, HAP1, mESC, MDP, CDP, precDC1, cDC1, THP-1 and d2PGCLC.
 
-For example, download and verify the GM12878 ensemble. Use a new directory
-for each cell so the checkpoint pattern selects exactly its ten members:
+For the example below, place the ten GM12878 checkpoint files and their
+`xatac_models.json` and `SHA256SUMS` metadata in `weights/xatac/gm12878`.
+Use a separate directory per cell so the pattern selects exactly ten members.
 
 ```bash
-gh release download xatac-avg10-20261102 --repo ahansenlab/XChroma \
-  --pattern 'XChroma_xATAC_gm12878_step*.pt' \
-  --pattern xatac_models.json --pattern SHA256SUMS --dir weights/xatac/gm12878
 (
   cd weights/xatac/gm12878
   awk '$2 == "xatac_models.json" || $2 ~ /^XChroma_xATAC_gm12878_step/ {print}' SHA256SUMS | shasum -a 256 -c -
@@ -65,8 +61,8 @@ python -m xtrain.predict --genome-fa genome.fa --assembly GRCh38 \
   --weights-dir weights --device cuda --out results/MYC_DNA_only
 ```
 
-Download the separate [contact-model weights](../xtrain/checkpoints/README.md)
-into `weights` before running the second command. For CPU inference, replace
+Place the separate local [contact-model weights](../xtrain/checkpoints/README.md)
+in `weights` before running the second command. For CPU inference, replace
 `--device cuda` with `--device cpu --threads 8` in both commands. Verified 1-Mb
 examples took 6.0–6.4 min on Linux with eight CPU threads and PyTorch 2.5.1,
 using ten checkpoints for each model after reference-context preparation.
@@ -79,7 +75,7 @@ Keep the ATAC NPZ and its JSON sidecar together.
 | HepG2 | 1030.0842872846365 | 6.132812 |
 | K562 | 1215.6612872453968 | 6.054688 |
 
-The release manifest also records the study-specific WT calibrations for HAP1,
+The ensemble metadata also records the study-specific WT calibrations for HAP1,
 Sox2, synEP/middle CTCF, Irf8, THP-1 and d2PGCLC. These scalars apply to the stated
 locus and use. Sox2 and synEP share mESC weights but use different scalars. Keep
 each WT scalar fixed across its edits. For accessibility output in insertion-site signal units,
@@ -216,7 +212,7 @@ PyTorch checkpoints.
 For an ensemble, pass checkpoints for the same cell type trained with the same
 target units after `--checkpoint`. Predictions are averaged in inverse-scaled
 site-signal units. For XChroma input export, add `--xchroma-scale S --gp99 P`. For the pretrained
-ensembles, use the release manifest's exact constants and scope. For a newly
+ensembles, use the ensemble metadata's exact constants and scope. For a newly
 trained model, establish two fixed calibration inputs:
 
 - `S`: over predefined, equal-length TRAIN intervals, divide the sum of mean
@@ -263,8 +259,7 @@ mean-reduced total-count Poisson plus 5×positional loss. See
 
 `load_weights` accepts compatible CNN inference checkpoints and strictly checks
 all active weights. Optimizer resume supports checkpoints created by this
-`xatac-v1` trainer. Pretrained weight files are distributed as the separate
-release assets described above.
+`xatac-v1` trainer. Inference requires local checkpoint files as described above.
 
 Files: `sites.py` prepares labels; `windows.py` packs data; `data.py` loads and
 augments; `model.py` defines the CNN; `loss.py` defines the objective; `train.py`

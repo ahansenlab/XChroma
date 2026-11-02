@@ -16,12 +16,10 @@ These examples use DNA and experimental ATAC-seq with the same contact model acr
 
 ## Predict a contact map from DNA and ATAC
 
-Install the inference dependencies and download the [model weights](https://github.com/ahansenlab/XChroma/releases/tag/main-model-avg10-30500-35000):
+Install the inference dependencies and place the ten local contact-model checkpoint files in `weights/`. Checkpoint files are not distributed in this repository:
 
 ```bash
 python -m pip install -r xtrain/requirements-inference.txt
-gh release download main-model-avg10-30500-35000 \
-  --repo ahansenlab/XChroma --pattern '*.ckpt.pt' --dir weights
 python -m xtrain.checkpoints.verify --weights-dir weights
 ```
 
@@ -46,18 +44,14 @@ Use a cell-specific **xatac** model to predict accessibility, then pass its outp
 and the same DNA sequence to **XChroma**. The contact model and weights are the same
 as above.
 
-Download the ten-member GM12878 ensemble from the
-[pretrained xATAC release](https://github.com/ahansenlab/XChroma/releases/tag/xatac-avg10-20261102)
-into a new, cell-specific directory, then predict accessibility with its fixed
-training calibration. Use the matching indexed hg38 reference FASTA. See the
+Place the ten local GM12878 xATAC checkpoints and their calibration metadata in
+`weights/xatac/gm12878`, then predict accessibility with the fixed training
+calibration. Use the matching indexed hg38 reference FASTA. See the
 [xatac guide](xatac/README.md#pretrained-ensembles) for checksum verification,
 other cell types and the scope of each calibration.
 
 ```bash
 python -m pip install -r xatac/requirements.txt
-gh release download xatac-avg10-20261102 --repo ahansenlab/XChroma \
-  --pattern 'XChroma_xATAC_gm12878_step*.pt' \
-  --pattern xatac_models.json --pattern SHA256SUMS --dir weights/xatac/gm12878
 python -m xatac.predict \
   --checkpoint weights/xatac/gm12878/XChroma_xATAC_gm12878_step*.pt \
   --fasta /path/to/hg38.fa --assembly hg38 --chrom chr8 \
