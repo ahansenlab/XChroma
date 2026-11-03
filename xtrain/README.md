@@ -4,8 +4,8 @@ XChroma predicts a 1-Mb contact map at 1-kb resolution from DNA sequence and chr
 
 ## Predict a region
 
-Place the ten local checkpoints listed in `checkpoints/current_model.json` in
-`weights/`. Checkpoint files are not distributed in this repository.
+Download the ten checkpoints from the [model release](https://github.com/ahansenlab/XChroma/releases/tag/main-model-avg10-30500-35000)
+into `weights/`. Their exact identities are listed in `checkpoints/current_model.json`.
 
 ```bash
 python -m pip install -r xtrain/requirements-inference.txt

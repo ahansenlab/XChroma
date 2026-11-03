@@ -16,7 +16,7 @@ These examples use DNA and experimental ATAC-seq with the same contact model acr
 
 ## Predict a contact map from DNA and ATAC
 
-Install the inference dependencies and place the ten local contact-model checkpoint files in `weights/`. Checkpoint files are not distributed in this repository:
+Install the inference dependencies and download the ten contact-model checkpoint files from the [model release](https://github.com/ahansenlab/XChroma/releases/tag/main-model-avg10-30500-35000) into `weights/`:
 
 ```bash
 python -m pip install -r xtrain/requirements-inference.txt

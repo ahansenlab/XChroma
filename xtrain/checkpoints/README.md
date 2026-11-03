@@ -6,7 +6,7 @@ The current XChroma model is the equal-weight mean of ten predictions from steps
 python xtrain/checkpoints/verify.py --weights-dir weights
 ```
 
-Place these ten local checkpoint files in `weights/` before running inference.
-Checkpoint files are not distributed in this repository.
+Download these ten checkpoint files from the [model release](https://github.com/ahansenlab/XChroma/releases/tag/main-model-avg10-30500-35000)
+into `weights/` before running inference. Authenticated repository access is required while XChroma is private.
 
 The inference command verifies every member and averages native natural-log observed/expected outputs, using float32 forwards and float64 accumulation. Model parameters are not averaged. Cell-specific accessibility models use separate checkpoints; see [xatac](../../xatac/README.md).
