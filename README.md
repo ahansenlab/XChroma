@@ -44,8 +44,9 @@ Use a cell-specific **xatac** model to predict accessibility, then pass its outp
 and the same DNA sequence to **XChroma**. The contact model and weights are the same
 as above.
 
-Place the ten local GM12878 xATAC checkpoints and their calibration metadata in
-`weights/xatac/gm12878`, then predict accessibility with the fixed training
+Download the ten GM12878 xATAC checkpoints, `xatac_models.json` and `SHA256SUMS`
+from the [xATAC release](https://github.com/ahansenlab/XChroma/releases/tag/xatac-avg10-20261102)
+into `weights/xatac/gm12878`, then predict accessibility with the fixed training
 calibration. Use the matching indexed hg38 reference FASTA. See the
 [xatac guide](xatac/README.md#pretrained-ensembles) for checksum verification,
 other cell types and the scope of each calibration.

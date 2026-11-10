@@ -25,9 +25,10 @@ python -m pytest xatac/tests -q
 
 ## Pretrained ensembles
 
-Use a local cell-specific xATAC ensemble. Checkpoint files are not distributed
-in this repository. The study uses ten checkpoints per cell type: GM12878,
-HCT116, HepG2, K562, HAP1, mESC, MDP, CDP, precDC1, cDC1, THP-1 and d2PGCLC.
+Download cell-specific xATAC ensembles from the
+[pretrained weights release](https://github.com/ahansenlab/XChroma/releases/tag/xatac-avg10-20261102).
+The study uses ten checkpoints per cell type: GM12878, HCT116, HepG2, K562, HAP1,
+mESC, MDP, CDP, precDC1, cDC1, THP-1 and d2PGCLC.
 
 For the example below, place the ten GM12878 checkpoint files and their
 `xatac_models.json` and `SHA256SUMS` metadata in `weights/xatac/gm12878`.
